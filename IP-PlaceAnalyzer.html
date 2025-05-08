@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="IPGeolocator-viewport" content="width=device-width=1"/>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Поисковик IP адресов для определения местоположении</title>
+        <link rel="stylesheet" href="IP-PlaceStyles.css">
+    </head>
+    <header>
+        <nav class="top-nav">
+            <div class="logo-block">
+                <figure class="icon-loader">
+                    <img src="awesome_globe.png" alt="GeoFinder IP">
+                    <figcaption>IP-API GeoFinder</figcaption>
+                </figure>
+                <span class="brand">IP GeoFinder.com</span>
+            </div>
+            <div class="nav-links">
+                <a href="IP-PlaceAnalyzer.html">На главную</a>
+                <a Href="https://ip-api.com/" target="_blank">Источник...</a>
+                <button type="button" id="about-page">Подробнее...</button>
+            </div>
+        </nav>
+    </header>
+    <body>
+        <div class="header">
+            <h2>IP-Геолокатор<br>Быстрый, Удобный, Точный!</h2>
+            <p>Вас приветствует Геолокатор IP адресов.</p>
+            <p>Для поиска информации по IP, введите его ниже.</p>
+            <p>Поддерживаются IPv4, IPv6 и доменные имена (пример example.com)</p>
+        </div>
+        <hr>
+        <form id="search-form">
+            <div class="input-area">
+                <label for="ip-input">Поиск по IP:</label>
+                <input type="text" id="ip-input" placeholder="1.1.1.1">
+
+                <button type="submit">Начать поиск</button>
+            </div>
+            <h2>Результаты поиска:</h2>
+            <ul id="results-list"></ul>
+        </form>
+    </body>
+    <hr>
+    <footer>
+        <p>Данный сайт использует основной сервис под названием <strong>IP-API.Com Geolocation</strong>.</p>
+        <p>Автор данного API: <i>Максим Витальевич</i></p>
+        <p>2025 <strong>&copy; Все права сохранены правообладателям</strong>.</p>
+    </footer>
+    <script src="IPAnalyzingScript.js"></script>
+</html>

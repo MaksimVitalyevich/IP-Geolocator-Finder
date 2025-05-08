@@ -1,0 +1,63 @@
+let ipData = null;
+
+async function loadDetails() {
+    const params = new URLSearchParams(window.location.search);
+    const target = params.get("target");
+
+    if (!target) {
+        document.getElementById('info').textContent = "IP Не найден/не передан.";
+        return;
+    }
+
+    let url = `http://ip-api.com/json/${encodeURIComponent(target)}`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Ошибка загрузки данных");
+
+        const data = await response.json();
+        if (data.status !== "success") throw new Error("IP Не найден!");
+
+        const table = document.querySelector('#ip-table tbody');
+        table.innerHTML = "";
+        const rows = [
+            ["IP", data.query],
+            ["Страна", data.country],
+            ["Регион", data.regionName],
+            ["Город", data.city],
+            ["ZIP-Код", data.zip],
+            ["Часовой пояс", data.timezone],
+            ["Мобильный", data.mobile ? "Да" : "Нет"],
+            ["Прокси", data.proxy ? "Да" : "Нет"],
+            ["Хостинг", data.hosting ? "Да" : "Нет"],
+            ["Провайдер", data.isp],
+            ["Организация", data.org],
+            ["AS", data.as]
+        ];
+
+        rows.forEach(([label, value]) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td><strong>${label}</strong></td><td>${value}</td>`;
+            table.appendChild(row);
+        });
+    } catch (e) {
+        document.getElementById("ip-table tbody").textContent = "Ошибка: " + e.message;
+    }
+}
+
+document.getElementById('save-json').addEventListener("click", () => {
+    if (!ipData) {
+        alert("Нет данных для сохранения!");
+        return;
+    }
+
+    const json = JSON.stringify(ipData, null, 2);
+    const blob = new Blob([json], {type: "application/json"});
+
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${ipData.query || "ip-info"}.json`;
+    a.click();
+});
+
+setTimeout(loadDetails, 1000);
