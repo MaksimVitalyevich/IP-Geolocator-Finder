@@ -1,9 +1,8 @@
+const params = new URLSearchParams(window.location.search);
+const target = params.get("target");
 let ipData = null;
 
 async function loadDetails() {
-    const params = new URLSearchParams(window.location.search);
-    const target = params.get("target");
-
     if (!target) {
         document.getElementById('info').textContent = "IP Не найден/не передан.";
         return;
@@ -17,6 +16,19 @@ async function loadDetails() {
 
         const data = await response.json();
         if (data.status !== "success") throw new Error("IP Не найден!");
+
+        ipData = {
+            "IP-Адрес": data.query,
+            "Страна": data.country || "Неизвестно",
+            "Регион": data.regionName || "Неизвестно",
+            "Город": data.city || "Неизвестно",
+            "ZIP-Код": data.zip || "Неизвестно",
+            "Часовой пояс": data.timezone || "Неизвестно",
+            "AS": data.as || "Неизвестно",
+            "Провайдер": data.isp || "Неизвестно",
+            "Организация": data.org || "Неизвестно",
+            "Прокси": data.proxy ? "Да" : "Нет"
+        };
 
         const table = document.querySelector('#ip-table tbody');
         table.innerHTML = "";
@@ -56,7 +68,7 @@ document.getElementById('save-json').addEventListener("click", () => {
 
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `${ipData.query || "ip-info"}.json`;
+    a.download = `${ipData["IP-Адрес"] || "ip-info"}.json`;
     a.click();
 });
 
