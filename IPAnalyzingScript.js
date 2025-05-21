@@ -52,9 +52,17 @@ function renderIPResults(dataArray) {
 
         const map = document.createElement('img');
 
-        map.src = `https://staticmap.openstreetmap.de/staticmap.php?center=${item.lat},${item.lon}&zoom=10&size=200x120&markers=${item.lat},${item.lon},red`;
+        if (item.lat && item.lon) {
+            map.src = `https://staticmap.openstreetmap.de/staticmap.php?center=${item.lat},${item.lon}&zoom=10&size=200x120&markers=${item.lat},${item.lon},red-pushpin`;
+        }
+        else
+        {
+            map.src = "no-image_placeholder.webp";
+        }
+
         map.alt = "Карта Мира";
-        map.className = "geo-map"
+        map.className = "geo-map";
+        map.referrerPolicy = "no-referrer";
 
         li.appendChild(info);
         li.appendChild(map);
